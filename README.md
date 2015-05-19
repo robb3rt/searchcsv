@@ -1,2 +1,14 @@
-# tripping-wight
-Zendesk app that is getting the search results of a query and will push them to an external server and retrieve a link to either a csv or xml file
+# App name
+
+[brief description of the app]
+
+### The following information is displayed:
+
+* info1
+* info2
+* info3
+
+Please submit bug reports to [Insert Link](). Pull requests are welcome.
+
+### Screenshot(s):
+[put your screenshots down here.]
