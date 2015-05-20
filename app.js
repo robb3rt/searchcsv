@@ -29,6 +29,7 @@
                   //do something here to submit the api call and retrieve results
                   this.ajax('getSearchResults', this.$("input#zQuery")[0].value)
                     .done(function(data) {
+                      data.sort(function(a,b) {return (a.result_type > b.result_type) ? 1 : ((b.result_type > a.result_type) ? -1 : 0);} );
                       console.dir(data);
                       //send data to server
                       //create file based on configuration
