@@ -30,7 +30,7 @@
                   this.ajax('getTotalTickets', this.$("input#zQuery")[0].value)
                     .done(function(data) {
                       console.dir(data);
-                  }
+                  });
               }
           }
       }
