@@ -27,9 +27,12 @@
           if (e.keyCode == 13){
               if(this.$("input#zQuery")[0].value){
                   //do something here to submit the api call and retrieve results
-                  this.ajax('getTotalTickets', this.$("input#zQuery")[0].value)
+                  this.ajax('getSearchResults', this.$("input#zQuery")[0].value)
                     .done(function(data) {
                       console.dir(data);
+                      //send data to server
+                      //create file based on configuration
+                      //wait for server to create file
                   });
               }
           }
