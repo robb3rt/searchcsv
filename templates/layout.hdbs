@@ -2,6 +2,3 @@
   <h3>{{setting "name"}}</h3>
 </header>
 <section data-main/>
-<form autocomplete="off" id="zForm">
-<input type="text" placeholder="Your query here" name="query" id="zQuery">
-</form>
