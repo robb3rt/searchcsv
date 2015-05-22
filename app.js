@@ -25,7 +25,7 @@
 					type: "POST",
 					data: {data : data},
 					cors: true
-				}
+				};
 			},
 			getTicketFields: function(){
 				return {
@@ -62,17 +62,21 @@
                   this.switchTo('loading');
                   this.ajax('getSearchResults', query)
                     .done(function(data) {
+						if (data.count === 0){this.switchTo('searchbar');return;}
 						var size = Math.ceil(data.count/100);
 						var results = (size == 1) ? new Array(0) : new Array(size-2);
 						results.push(data.results);
 						for (var i = 1; i < size; i++){
+                            this.ajax('getSearchResultsByPage', query, i+1)
 								.done(function(restdata){
 									results.push(restdata.results);
 								});
 						}
+                        console.dir(results);
 						this.ajax('requestCSV', results)
 							.done(function(data) {
 								//TODO create CSV file based on settings
+								//console.dir(data);
                                 this.switchTo('searchbar');
 							});
                   });
@@ -80,16 +84,27 @@
           }
       },
       maintainLayout: function(e){
+          _.defer(function() {
+              return false;
+          });
           if(this.currentLocation() == "nav_bar"){
+              this.ajax('getTicketFields')
+                .done(function(data) {
+                  if (data.count === 0){this.switchTo('navbar');return;}
 						var size = Math.ceil(data.count/100);
 						var results = (size == 1) ? new Array(0) : new Array(size-2);
 						results.push(data.ticket_fields);
 						for (var i = 1; i < size; i++){
+                            this.ajax('getTicketFieldsByPage', i+1)
 								.done(function(restdata){
 									results.push(restdata.ticket_fields);
 								});
 						}
 						var fields = new Array();
+						for(var h = 0; h < results.length; h++ ){
+							for(var j = 0; j < results[h].length; j++){
+								var id = results[h][j].id;
+								var title = results[h][j].title;
 								fields.push({id: id, title: title});
 							}
 						}
@@ -100,6 +115,10 @@
           } else {
               this.switchTo('searchbar');
           }
+      },
+      dragSortable: function(e){
+        console.dir("test");
+        console.dir(e);
       }
   };
     
