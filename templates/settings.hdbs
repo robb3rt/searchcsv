@@ -1,4 +1,3 @@
-<section data-main/>
 <h2 class="sort_formatting_options">CSV Formatting Options</h2>
 <table class="sortable_table">
     <tr>
@@ -8,31 +7,31 @@
     <tr>
         <td>
             <ol id="settinglist">
-                <li class="sortable" id="csv_id">ID</li>
-                <li draggable="true" class="sortable" id="csv_updated_requester">Latest update by requester</li>
-                <li draggable="true" class="sortable" id="csv_submitter">Submitter</li>
-                <li draggable="true" class="sortable" id="csv_assigned">Assigned date</li>
-                <li draggable="true" class="sortable" id="csv_updated_assignee">Latest update by assignee</li>
-                <li draggable="true" class="sortable" id="csv_updated_by_type">Latest update by type (agent/end-user)</li>
-                <li draggable="true" class="sortable" id="csv_organization">Organization</li>
-                <li draggable="true" class="sortable" id="csv_updated">Latest Updated</li>
-                <li draggable="true" class="sortable" id="csv_solved">Solved Date</li>
-                <li draggable="true" class="sortable" id="csv_due_date">Due Date</li>
-                <li draggable="true" class="sortable" id="csv_locale_id">Requester language</li>
-                <li draggable="true" class="sortable" id="csv_via">Channel</li>
-                <li draggable="true" class="sortable" id="csv_ticket_form">Ticket Form</li>
-                <li draggable="true" class="sortable" id="csv_brand">Brand</li>
-                <li draggable="true" class="sortable" id="csv_group">Group</li>
-                <li draggable="true" class="sortable" id="csv_priority">Priority</li>
-                <li draggable="true" class="sortable" id="csv_type">Ticket type</li>
+                <li unselectable="on" class="sortable" id="csv_id">ID</li>
+                <li unselectable="on" class="sortable" id="csv_updated_requester">Latest update by requester</li>
+                <li unselectable="on" class="sortable" id="csv_submitter">Submitter</li>
+                <li unselectable="on" class="sortable" id="csv_assigned">Assigned date</li>
+                <li unselectable="on" class="sortable" id="csv_updated_assignee">Latest update by assignee</li>
+                <li unselectable="on" class="sortable" id="csv_updated_by_type">Latest update by type (agent/end-user)</li>
+                <li unselectable="on" class="sortable" id="csv_organization">Organization</li>
+                <li unselectable="on" class="sortable" id="csv_updated">Latest Updated</li>
+                <li unselectable="on" class="sortable" id="csv_solved">Solved Date</li>
+                <li unselectable="on" class="sortable" id="csv_due_date">Due Date</li>
+                <li unselectable="on" class="sortable" id="csv_locale_id">Requester language</li>
+                <li unselectable="on" class="sortable" id="csv_via">Channel</li>
+                <li unselectable="on" class="sortable" id="csv_ticket_form">Ticket Form</li>
+                <li unselectable="on" class="sortable" id="csv_brand">Brand</li>
+                <li unselectable="on" class="sortable" id="csv_group">Group</li>
+                <li unselectable="on" class="sortable" id="csv_priority">Priority</li>
+                <li unselectable="on" class="sortable" id="csv_type">Ticket type</li>
                 {{#each ticket_fields}}
-                <li draggable="true"  class="sortable" id="csv_{{id}}">{{title}}</li>
+                <li unselectable="on" class="sortable" id="csv_{{id}}">{{title}}</li>
                 {{/each}}
             </ol>
         </td>
         <td>
-            <ol id="settinglist">
-                <li class="sortable" id="csv_test">Test</li>
+            <ol id="settinglist2">
+                <li unselectable="on" class="sortable" id="csv_test">Test</li>
             </ol>
         </td>
     </tr>
