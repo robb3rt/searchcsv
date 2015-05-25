@@ -17,12 +17,12 @@
 }
 
 li.droptarget {
-	background-color: white !important;
-    border: 1px dashed black !important;
+	background: transparent !important;
+    border: 1px dashed #7FA239 !important;
     margin: 6px 0;
     padding: 4px 7px;
 	width: 200px;
-	height: 15px;
+	height: 12px;
 }
 
 .sort_header {

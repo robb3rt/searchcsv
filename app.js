@@ -49,7 +49,6 @@
 			'app.activated': 'maintainLayout',
 			'mouseenter .sortable': 'enterOption',
 			'mousedown .sortable': 'pressOption',
-			'mouseout .draggingOption': 'leaveOption',
 			'mouseup #mainsection': 'releaseOption',
 			'mousemove #mainsection': 'moveOption',
 			'scroll .main_panes': 'testReturn'
@@ -71,44 +70,47 @@
 				//console.log(e);
 			}
 		},
-		leaveOption: function(e){
-			if (mousedown){
-				//
-			}
-		},
 		pressOption: function(e){
 			e.preventDefault();
+			//if (mousedown){return;}
 			mousedown = true;
 			el = e.target;
-			el.className = el.className + " draggingOption";
 			dragoffset.x = e.pageX - el.offsetLeft;
-			dragoffset.y = (e.pageY - el.offsetTop + this.$(".main_panes").context.scrollTop + 12);
+			dragoffset.y = (e.pageY - el.offsetTop + el.style.marginTop + el.style.marginBottom + this.$(".main_panes").context.scrollTop);
 		},
 		releaseOption: function(e){
 			mousedown = false;
-			el = null;
-			//console.log(e);
-			dragoffset = {
+			if (dragged == true){
+				el.style.left = "";
+				el.style.top = "";
+				el.style.position = "";
+				el.style.zIndex = "";
+				this.$(".droptarget")[0].parentNode.insertBefore(el, this.$(".droptarget")[0].nextSibling);
+				this.$(".droptarget")[0].parentNode.removeChild(this.$(".droptarget")[0]);
+				//el = null;
+				dragoffset = {
 					x: 0,
 					y: 0
+				}
 			}
+			dragged = false;
 		},
 		moveOption: function(e){
 			if (mousedown){
+				dragged = true;
 				//check if el is absolute or not
 				e.preventDefault();
 				if (el.style.position !== 'absolute'){
 					var droptarget = document.createElement("li");
 					droptarget.setAttribute("class", "droptarget");
 					el.parentNode.insertBefore(droptarget, el.nextSibling);
-					el.style.position = 'absolute';
+					el.style.position = "absolute";
+					el.style.zIndex = "1000";
 					dragoffset.x = e.pageX - el.offsetLeft;
 					dragoffset.y = (e.pageY - el.offsetTop + (this.$(".main_panes").context.scrollTop + 12));
 					//once pressed create drop container.
 				} else if (e.pageY > this.$(".main_panes").context.offsetHeight){
 					//scroll down
-					console.log(this.$(".main_panes").context.scrollTop + " " + this.$(".main_panes").context.scrollHeight);
-					console.dir(this.$(".main_panes").context);
 					this.$(".main_panes").context.scrollTop += 10;
 				} else if (e.pageY < (here.$(".main_panes").context.offsetTop + 100)){
 					//scroll up
@@ -136,7 +138,6 @@
 										results.push(restdata.results);
 									});
 							}
-							console.dir(results);
 							this.switchTo('searchbar');
 							/*this.ajax('requestCSV', results)
 								.done(function(data) {
@@ -157,9 +158,11 @@
 				}
 				el = null;
 				here = this;
+				dragged = false;
 				scrollValue = this.$(".main_panes").context.scrollTop;
 				scrolled = 0;
-				this.inDOM = true;
+				coordinates = new Array();
+				//this.inDOM = true;
 				this.ajax('getTicketFields')
 					.done(function(data) {
 						if (data.count === 0){this.switchTo('navbar');return;}
@@ -181,9 +184,22 @@
 								fields.push({id: id, title: title});
 							}
 						}
+						//TODO load previously set ticketfields by the user
 						this.switchTo('settings', {
 							ticket_fields: fields
 						});
+						//TODO http://stackoverflow.com/questions/8614073/how-to-start-mouseover-event-while-dragging
+						//check coordinates
+						/*for (var element in this.$(".sortable")){
+							coordinates.push({
+								dom: element,
+								left: element.offsetLeft,
+								top: element.offsetTop,
+								right: element.offsetLeft + element.offsetWidth,
+								bottom: element.offsetTop + element.offsetHeight
+							});
+						}
+						console.dir(coordinates	);*/
 					});
 			} else {
 				this.switchTo('searchbar');
