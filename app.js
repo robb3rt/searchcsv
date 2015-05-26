@@ -92,6 +92,20 @@
 					x: 0,
 					y: 0
 				}
+                coordinates = new Array();
+                var itable = this.$(".sortable")
+                //TODO Adjust this functionality
+                for (var i = 0; i < itable.length; i++){
+                    var element = itable[i];
+                    var offsetleft = element.parentNode.getAttribute("id") == "settinglist" ? element.offsetLeft : element.offsetLeft + this.$("#settinglist")[0].offsetWidth;
+                    coordinates.push({
+                        dom: element,
+                        left: (offsetleft + this.$(".sortable_table")[0].offsetLeft),
+                        top: (element.offsetTop),
+                        right: offsetleft + this.$(".sortable_table")[0].offsetLeft + element.offsetWidth,
+                        bottom: (element.offsetTop) + element.offsetHeight
+                    });
+                }
 			}
 			dragged = false;
 		},
@@ -116,6 +130,18 @@
 					//scroll up
 					this.$(".main_panes").context.scrollTop -= 10;
 				}
+                for (var i = 0; i < coordinates.length; i++) {
+                    if (e.pageX >= coordinates[i].left && e.pageX <= coordinates[i].right) {
+                        if (((e.pageY - dragoffset.y) + this.$(".main_panes").context.scrollTop) >= coordinates[i].top && ((e.pageY - dragoffset.y) + this.$(".main_panes").context.scrollTop) <= coordinates[i].bottom) {
+                            // Yes, the mouse is on a droppable area
+                            //change coordinates
+                            console.dir(coordinates[i].dom);
+                            coordinates[i].dom.parentNode.insertBefore( this.$(".droptarget")[0], coordinates[i].dom.previousSibling);
+                        }
+                    } else {
+                        // Nope, we did not hit any objects yet
+                    }
+                }
 				el.style.left = (e.pageX - dragoffset.x) + "px";
 				el.style.top = ((e.pageY - dragoffset.y) + this.$(".main_panes").context.scrollTop) + "px";
 			}
@@ -190,16 +216,19 @@
 						});
 						//TODO http://stackoverflow.com/questions/8614073/how-to-start-mouseover-event-while-dragging
 						//check coordinates
-						/*for (var element in this.$(".sortable")){
-							coordinates.push({
-								dom: element,
-								left: element.offsetLeft,
-								top: element.offsetTop,
-								right: element.offsetLeft + element.offsetWidth,
-								bottom: element.offsetTop + element.offsetHeight
-							});
-						}
-						console.dir(coordinates	);*/
+                        var itable = this.$(".sortable")
+                        for (var i = 0; i < itable.length; i++){
+                            var element = itable[i];
+                            var offsetleft = element.parentNode.getAttribute("id") == "settinglist" ? element.offsetLeft : element.offsetLeft + this.$("#settinglist")[0].offsetWidth;
+                            coordinates.push({
+                                dom: element,
+                                left: (offsetleft + this.$(".sortable_table")[0].offsetLeft),
+                                top: (element.offsetTop + this.$(".sortable_table")[0].offsetTop + this.$("#settinglist")[0].offsetTop),
+                                right: offsetleft + this.$(".sortable_table")[0].offsetLeft + element.offsetWidth,
+                                bottom: (element.offsetTop + this.$(".sortable_table")[0].offsetTop + this.$("#settinglist")[0].offsetTop) + element.offsetHeight
+                            });
+                        }
+                    console.dir(coordinates);
 					});
 			} else {
 				this.switchTo('searchbar');
